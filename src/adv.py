@@ -18,8 +18,6 @@ room = {
     'clearance_fabric': Room("Clearance Fabric Room", """You've found the store's clearance fabric.  Sadly all the fabric looks incredibly ugly. The only exit is the curtained doorway on the south side of the room."""),
 }
 
-print(room['outside'].name)
-
 # _______
 # |ga|cf| 
 # |..|..|
@@ -39,16 +37,15 @@ room['sewing_room'].w_to = room['store']
 room['sewing_room'].n_to = room['clearance_fabric']
 room['clearance_fabric'].s_to = room['sewing_room']
 
-
 #
+# Brady Clean Solution
 # Main
 #
-
 # Make a new player object that is currently in the 'outside' room.
 player = Player(input("Please enter your name: "), room['outside'])
-
+print(player.current_room)
 # Write a loop that:
-
+#
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
@@ -57,34 +54,18 @@ player = Player(input("Please enter your name: "), room['outside'])
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+valid_directions = ("n", "s", "e", "w")
+
 while True:
-    print(player.player_location.name)
-    print("")
-    print(player.player_location.description)
-    cmd = input("\n--> ")
-    if cmd == 'q':
+    cmd = input("\n~~> ")
+    if cmd == "q":
         print("Goodbye!")
         exit(0)
-    elif cmd == "n":
-        if player.player_location.n_to is not None:
-            player.player_location = player.player_location.n_to
-        else:
-            print("You cannot move in that directon")
-    elif cmd == "s":
-        if player.player_location.s_to is not None:
-                player.player_location = player.player_location.s_to
-        else:
-            print("you cannot move in that direction")
-    elif cmd == "w":
-        if player.player_location.w_to is not None:
-                player.player_location = player.player_location.w_to
-        else:
-            print("you cannot move in that direction")
-    elif cmd == "e":
-        if player.player_location.e_to is not None:
-                player.player_location = player.player_location.e_to
-        else:
-            print("you cannot move in that direction")
+    elif cmd in valid_directions:
+        player.travel(cmd)
+    else:
+        print("I did not understand that command")
+
 
 # def title_screen_selections():
 #     option = input("> ")
@@ -135,21 +116,34 @@ while True:
 #     WEST = 'left', 'west'
 #     EAST = 'right', 'east'
 
-# zonemap = {
-#     'outside': {
 
-#     },
-#     'store': {
 
-#     },
-#     'gallery': {
-
-#     },
-#     'sewing_room': {
-
-#     },
-#     'clearance': {
-
-#     }
-# }
-
+#Brady Initial Solution
+# while True:
+#     print(player.player_location.name)
+#     print("")
+#     print(player.player_location.description)
+#     cmd = input("\n--> ")
+#     if cmd == 'q':
+#         print("Goodbye!")
+#         exit(0)
+#     elif cmd == "n":
+#         if player.player_location.n_to is not None:
+#             player.player_location = player.player_location.n_to
+#         else:
+#             print("You cannot move in that directon")
+#     elif cmd == "s":
+#         if player.player_location.s_to is not None:
+#                 player.player_location = player.player_location.s_to
+#         else:
+#             print("you cannot move in that direction")
+#     elif cmd == "w":
+#         if player.player_location.w_to is not None:
+#                 player.player_location = player.player_location.w_to
+#         else:
+#             print("you cannot move in that direction")
+#     elif cmd == "e":
+#         if player.player_location.e_to is not None:
+#                 player.player_location = player.player_location.e_to
+#         else:
+#             print("you cannot move in that direction")
