@@ -1,8 +1,19 @@
 from room import Room
 from player import Player
-import sys
-import os
+from item import Item, Fabric
 
+scissors = Item('Scissors', 'This is a pair of 9 inch Gingher sewing shears.')
+pinkfabric = Fabric('Pink Fabric', 'This is baby pink colored cotton fabric.', 2)
+purplefabric = Fabric('Purple Fabric', 'This is a deep purple fabric.', 3)
+flowerfabric = Fabric('Flowery Fabric', 'This is fabric covered in flowers including tulips, pansies, and daffodils.', 1)
+dotfabric = Fabric('Dotted Fabric', 'This is a polkadot fabric on a white background with pink, purple, and yellow dots.', 1)
+muslinfabric = Fabric('Plain Muslin Fabric', 'This is 108 inch wide natural muslin fabric.', 2)
+
+outside_things = [pinkfabric, purplefabric]
+store_things = []
+gallery_things = []
+sewing_room_things = []
+clearance_fabric_things = []
 # Declare all the rooms
 
 room = {
@@ -43,7 +54,12 @@ room['clearance_fabric'].s_to = room['sewing_room']
 #
 # Make a new player object that is currently in the 'outside' room.
 player = Player(input("Please enter your name: "), room['outside'])
-print(player.current_room)
+current_room = player.current_room
+player.items.append(scissors)
+print(current_room)
+print(pinkfabric)
+# print(outside_things[0], outside_things[1])
+print(len(current_room.things_list))
 # Write a loop that:
 #
 # * Prints the current room name
@@ -63,6 +79,11 @@ while True:
         exit(0)
     elif cmd in valid_directions:
         player.travel(cmd)
+    elif cmd == 'i':
+        player.print_inventory()
+    elif cmd == 'l':
+        # current_room = player.current_room
+        current_room.print_things()
     else:
         print("I did not understand that command")
 
